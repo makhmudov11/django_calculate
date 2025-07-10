@@ -1,13 +1,12 @@
 import csv
+import logging
 
 from django.shortcuts import render
 
 # Create your views here.
+path = "D:/Viscode_python/6-Django/projects/homework_calculator/calculate"
 
 def calculator_view(request):
-
-    path = "D:/Viscode_python/6-Django/projects/homework_calculator/calculate"
-
     if request.method == 'POST':
         try:
             son1 = request.POST.get('son1', "")
@@ -36,16 +35,16 @@ def calculator_view(request):
                     writer.writerow([int(son1), amal, int(son2), int(natija)])
                 else:
                     writer.writerow([son1, amal, son2, natija])
+                return render(request, 'calculator.html', {'natija': natija})
         except Exception as e:
             natija = f"Xatolik, noto‘g‘ri son kiritildi, {e}"
-
-        return render(request, 'calculator.html', {'natija': natija})
-    elif request.method == 'GET':
+            return render(request, 'calculator.html', {'natija': natija})
+    return render(request, 'calculator.html')
+def history_view(request):
         with open(f"{path}/calculate.his.csv", mode='r', encoding='UTF-8', newline="") as file:
             reader = list(csv.reader(file))
             data = {
                 "rows" : reader
             }
-            render(request=request, template_name='calculator.html')
-            return render(request=request, template_name='calculate_history.html', context=data)
+        return render(request=request, template_name='calculate_history.html', context=data)
 
