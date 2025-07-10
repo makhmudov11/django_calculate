@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulyator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    .calculator {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <h2>Oddiy Kalkulyator</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <input type="number" name="son1" placeholder="1-sonni kiriting" required>
+      <input type="number" name="son2" placeholder="2-sonni kiriting" required>
+
+      <select name="amal">
+        <option value="+">Qo‘shish (+)</option>
+        <option value="-">Ayirish (-)</option>
+        <option value="*">Ko‘paytirish (*)</option>
+        <option value="/">Bo‘lish (/)</option>
+      </select>
+
+      <button type="submit">Hisoblash</button>
+    </form>
+
+    {% if natija %}
+      <div class="result">Natija: {{ natija }}</div>
+    {% endif %}
+  </div>
+
+</body>
+</html>
